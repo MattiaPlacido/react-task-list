@@ -7,14 +7,56 @@ import "./App.css";
 import { tasks } from "./data.js";
 
 const completedTasks = tasks.filter((task) => task.state === "completed");
-const ongoingTasks = tasks.filter(
+const currentTasks = tasks.filter(
   (task) => task.state === "in_progress" || task.state === "backlog"
 );
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [completedTasksCount, setCompletedCount] = useState(
+    completedTasks.length
+  );
+  const [currentTasksCount, setcurrentCount] = useState(currentTasks.length);
 
-  return <></>;
+  const completedTasksComponent = () => (
+    <>
+      {completedTasks.map((task) => (
+        <div className="component">
+          <h4 key={task.id}>{task.title}</h4>
+          <p>Priority: {task.priority}</p>
+          <p>Est.time: {task.estimatedTime}</p>
+        </div>
+      ))}
+    </>
+  );
+
+  const currentTasksComponent = () => (
+    <>
+      {currentTasks.map((task) => (
+        <div className="component">
+          <h4 key={task.id}>{task.title}</h4>
+          <p>Priority: {task.priority}</p>
+          <p>Est.time: {task.estimatedTime}</p>
+        </div>
+      ))}
+    </>
+  );
+
+  return (
+    <>
+      <div className="header">
+        <p>Task Manager</p>
+      </div>
+      <div className="body">
+        <h2>Current Tasks ({currentTasksCount})</h2>
+        <br></br>
+        {currentTasksComponent()}
+        <hr></hr>
+        <h2>Completed Tasks ({completedTasksCount})</h2>
+        <br></br>
+        {completedTasksComponent()}
+      </div>
+    </>
+  );
 }
 
 export default App;
